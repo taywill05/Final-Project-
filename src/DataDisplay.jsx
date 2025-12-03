@@ -26,6 +26,7 @@ function moodToEmoji(mood) {
     joyful: "😂",
     peaceful: "☮️",
     frustrated: "😤",
+    irritated: "😑",
   };
 
   if (!mood) return "❓";
