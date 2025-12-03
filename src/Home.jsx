@@ -1,31 +1,41 @@
 import { Link } from 'react-router-dom';
 import './Home.css';
+import { GoogleGenAI } from "@google/genai";
+import { useState } from 'react';
 
 function Home() {
+    const demoQuestions ='What color feels like you today?\n' +
+        'Pick your energy: 🐢 🐇 🚀 🧘\n' +
+        'Which fictional character matches your mood?\n';
+
+    const [questions, setQuestions] = useState([]);
+
+    const ai = new GoogleGenAI({});
+
+    async function getQuestions() {
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: `Generate 3 -5 questions like ${demoQuestions}`,
+        });
+        console.log(response.text);
+        return response;
+    }
+
+    useEffect(async () => {
+        await getQuestions().then((results)=>{
+
+        })
+    }, []);
+
     return (
         <div className ="home-container">
             <h1 className = "hero-title">How's Your Vibe Today?</h1>
 
-            <div className ="mood-row">
-                <button className="mood-button">
-                    <span className ="mood-emoji">😊</span>
-                    <span className ="mood-label"> Happy</span>
-                </button>
 
-                <button className="mood-button">
-                    <span className ="mood-emoji">😔</span>
-                    <span className ="mood-label"> Sad</span>
-                </button>
 
-                <button className="mood-button">
-                    <span className ="mood-emoji">😡</span>
-                    <span className ="mood-label"> Angry</span>
-                </button>
 
-                <button className="mood-button">
-                    <span className ="mood-emoji">😲</span>
-                    <span className ="mood-label"> Surprised</span>
-                </button>
+            <div id="questions">
+
             </div>
 
                 <Link to="/log-mood">
