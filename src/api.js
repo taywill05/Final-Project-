@@ -14,9 +14,14 @@ export async function createMood(moodEntry) {
 
   moods.push(newEntry);
 
-  // simulate small delay
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(newEntry), 300);
+axios.post('/add', newEntry, {
+  headers: {"Content-Type": "application/json"}
+})
+  .then(response => {
+    console.log('Mood Added:', response.data);
+  })
+  .catch(error => {
+    console.log('Error adding mood:', error.response);
   });
 }
 
