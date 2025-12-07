@@ -36,7 +36,7 @@ Optional API
 OpenAI / Spotify
 Caption generation / vibe-based music suggestions
 
-**##Architecture Diagram##**
+### Architecture Diagram
 <img width="4032" height="2215" alt="image" src="https://github.com/user-attachments/assets/4249821a-a008-414d-827d-f144de5b2acd" />
 
 
