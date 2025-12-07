@@ -57,21 +57,13 @@ Breanna Taffe 			Shemaiah Lester
 
 - Date Submitted:11/18/2025
 
-AI Tool Usage Table
-Date
-AI Tool
-Prompt(Summary)
-Purpose
-Output Used Y/N
-Human Revisions
-Ethical Reflection
-11/12
-Copilot
-Describe some simple app ideas for an intermediate programmer?
-Feature Discovery
-Y
-Combined the generated vibe check idea with the mood journal feature to use emojis to log daily mood. 
-We used AI to help us identify some general app topics to build app features around. This AI provided us with a jumping-off point for an app idea that we could create several features around.
+
+### 🤖 AI Tool Usage Log
+
+| **Date**  | **AI Tool** | **Prompt (Summary)**                                      | **Purpose**          | **Output Used (Y/N)** | **Human Revisions**                                                                 | **Ethical Reflection**                                                                 |
+|-----------|-------------|-----------------------------------------------------------|----------------------|------------------------|--------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
+| 11/12     | Copilot     | Describe some simple app ideas for an intermediate programmer? | Feature Discovery    | Y                      | Combined the generated vibe check idea with the mood journal feature to use emojis to log daily mood. | We used AI to help us identify some general app topics to build app features around. This AI provided us with a jumping-off point for an app idea that we could create several features around. |
+
 
 Summary of AI Use
 AI was utilized to help generate app ideas across various categories, which were then analyzed as potential app options
