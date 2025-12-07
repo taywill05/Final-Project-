@@ -35,7 +35,43 @@ Optional API
 OpenAI / Spotify
 Caption generation / vibe-based music suggestions
 
+🔗 API Endpoints
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MethodRoutePurposeGET/moodsFetch all mood entriesPOST/moodsCreate a new mood entryGET/moods/{id}Fetch a specific mood entryPUT/moods/{id}Update a mood entry
 
 AI Usage Log Template
 Project Information
