@@ -37,41 +37,13 @@ Caption generation / vibe-based music suggestions
 
 🔗 API Endpoints
 
+| **Method**    | **Route**     |   **Purpose**                 |
+|------------|-------------------|--------------------------------|
+| **GET**    | `/moods`          | Fetch all mood entries         |
+| **POST**   | `/moods`          | Create a new mood entry        |
+| **GET**    | `/moods/{id}`     | Fetch a specific mood entry    |
+| **PUT**    | `/moods/{id}`     | Update a mood entry            |
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-MethodRoutePurposeGET/moodsFetch all mood entriesPOST/moodsCreate a new mood entryGET/moods/{id}Fetch a specific mood entryPUT/moods/{id}Update a mood entry
 
 AI Usage Log Template
 Project Information
