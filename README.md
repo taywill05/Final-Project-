@@ -1,8 +1,9 @@
-**### 🌈 App Concept: “MoodSpace” — Your Daily Mood + Vibe Tracker**
+### 🌈 App Concept: “MoodSpace” — Your Daily Mood + Vibe Tracker
 
-**### 🎯 Core Purpose**
+### 🎯 Core Purpose
 To help users reflect on their emotional state and personality “vibe” each day using emojis, quirky prompts, and visual logs. It’s part journal, part personality mirror.
-**### 🧩 Key Features**
+
+### 🧩 Key Features
 1. Daily Vibe Check
 Answer 3–5 fun, rotating questions like:
 “What color feels like you today?”
@@ -18,7 +19,7 @@ Scrollable calendar or timeline view of past vibes and emoji logs.
 Color-coded entries (e.g., warm tones for energetic days, cool tones for calm ones).
 Tap to expand and read past entries.
 
-**### 🛠️ Tech Stack**
+### 🛠️ Tech Stack
 Layer
 Technology
 Role
