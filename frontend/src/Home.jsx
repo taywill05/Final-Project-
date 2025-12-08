@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./Home.css";
 import { useState, useEffect } from "react";
-import { GoogleGenerativeAI } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 
 function Home() {
     const demoQuestions = `What color feels like you today?
@@ -10,8 +10,10 @@ Which fictional character matches your mood?`;
 
     const [questions, setQuestions] = useState("");
 
-    const genAI = new GoogleGenerativeAI({
-        apiKey: process.env.REACT_APP_GOOGLE_API_KEY
+    console.log('API key present?', !!import.meta.env.VITE_GEMINI_API_KEY);
+
+    const genAI = new GoogleGenAI({
+        apiKey: import.meta.env.VITE_GEMINI_API_KEY
     });
 
     async function getQuestions() {
@@ -19,6 +21,7 @@ Which fictional character matches your mood?`;
         const response = await model.generateContent(
             `Generate 3-5 questions like: ${demoQuestions}`
         );
+        console.log("Gemini response:", response);
         return response.response.text();
     }
 
