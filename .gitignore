@@ -2,6 +2,7 @@
 openJdk-25/
 src/node_modules
 src/.env
+/.env
 
 # Logs
 logs
