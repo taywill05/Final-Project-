@@ -42,12 +42,12 @@ Caption generation / vibe-based music suggestions
 
 **### 🔗 API Endpoints**
 
-| **Method**    | **Route**     |   **Purpose**                 |
-|------------|-------------------|--------------------------------|
-| **GET**    | `/moods`          | Fetch all mood entries         |
-| **POST**   | `/moods`          | Create a new mood entry        |
-| **GET**    | `/moods/{id}`     | Fetch a specific mood entry    |
-| **PUT**    | `/moods/{id}`     | Update a mood entry            |
+| **Method**    | **Route**        |   **Purpose**                 |
+|------------|-----------------------|--------------------------------|
+| **GET**    | `/moods`              | Go to Home Screen              |
+| **POST**   | `/moods`              | Create a new mood entry        |
+| **GET**    | `/moods/data-display` | Fetch all mood entries         |
+| **PUT**    | `/moods/{id}`         | Update a mood entry            |
 
 
 AI Usage Log Template
