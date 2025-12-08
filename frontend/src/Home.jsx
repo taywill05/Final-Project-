@@ -8,31 +8,41 @@ function Home() {
 
             <div className ="mood-row">
                 <button className="mood-button">
-                    <span className ="mood-emoji">😊</span>
-                    <span className ="mood-label"> Happy</span>
+                    <span className ="mood-emoji"></span>
+                    <span className ="mood-label">Lazy</span>
                 </button>
 
                 <button className="mood-button">
-                    <span className ="mood-emoji">😔</span>
-                    <span className ="mood-label"> Sad</span>
+                    <span className ="mood-emoji"></span>
+                    <span className ="mood-label">Silly</span>
                 </button>
 
                 <button className="mood-button">
-                    <span className ="mood-emoji">😡</span>
-                    <span className ="mood-label"> Angry</span>
+                    <span className ="mood-emoji"></span>
+                    <span className ="mood-label">Party Mode</span>
                 </button>
 
                 <button className="mood-button">
-                    <span className ="mood-emoji">😲</span>
-                    <span className ="mood-label"> Surprised</span>
+                    <span className ="mood-emoji"></span>
+                    <span className ="mood-label">Locked In</span>
                 </button>
+
+                <button className="mood-button">
+                    <span className ="mood-emoji"></span>
+                    <span className ="mood-label">Main Character</span>
+                </button>
+                <button className="mood-button">
+                    <span className ="mood-emoji"></span>
+                    <span className ="mood-label">NPC Mode</span>
+                </button>
+
             </div>
 
-                <Link to="/log-mood">
+                {/*<Link to="/log-mood">
                     <button className="logMood-button">
                         Log Your Mood
                     </button>
-                </Link>
+                </Link>*/}
 
             <div className="stats-row">
                 <div className="stat-card">

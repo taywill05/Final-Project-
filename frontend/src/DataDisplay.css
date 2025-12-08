@@ -32,6 +32,11 @@
 .history-card {
   background: rgba(10, 9, 30, 0.85);
   border-radius: 24px;
+  margin: 0 auto;
+  max-width: 800px;
+  grid-template-columns: 1.2fr 1fr 1.8fr;
+  column-gap: 20px;
+  width: 100%;
   padding: 20px 24px;
   text-align: left;
   backdrop-filter: blur(8px);
@@ -40,10 +45,11 @@
 
 .history-row {
   display: grid;
-  grid-template-columns: 0.9fr 0.8fr 2fr;
+  grid-template-columns: 1.2fr 1fr 1.8fr;
   padding: 12px 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 15px;
+  font-size: 16px;
+  column-gap: 140px;
   align-items: center;
 }
 
@@ -73,6 +79,10 @@
 
 .history-notes {
   opacity: 0.95;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-width: 100%;
+    overflow-wrap: break-word;
 }
 
 .history-empty {

@@ -69,7 +69,6 @@ function MoodLog() {
                     <option value="joyful">😂 Joyful</option>
                     <option value="peaceful">☮️ Peaceful</option>
                     <option value="frustrated">😤 Frustrated</option>
-                    <option value="irritated">😑 Irritated</option>
 
                 </select>
             </label>

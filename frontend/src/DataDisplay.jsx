@@ -26,7 +26,6 @@ function moodToEmoji(mood) {
     joyful: "😂",
     peaceful: "☮️",
     frustrated: "😤",
-    irritated: "😑",
   };
 
   if (!mood) return "❓";
@@ -107,7 +106,6 @@ function DataDisplay() {
           <option value="joyful">😂 Joyful</option>
           <option value="peaceful">☮️ Peaceful</option>
           <option value="frustrated">😤 Frustrated</option>
-          <option value="irritated">😑 Irritated</option>
         </select>
       </div>
 
