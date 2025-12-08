@@ -1,12 +1,14 @@
 import axios from 'axios';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/moods',
+    baseURL: API_URL,
+    withCredentials: false,
     headers: {"Content-Type": "application/json"},
 });
 
 // Attach JWT from localStorage before each request
-api.interceptors.request.use(
+/*api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("contactlist_token");
         if (token) {
@@ -27,7 +29,7 @@ api.interceptors.response.use(
         }
         return Promise.reject(error);
     }
-);
+);*/
 
 export async function apiGet(path) {
     const res = await api.get(path);
