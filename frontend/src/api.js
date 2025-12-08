@@ -1,3 +1,4 @@
+import { apiSend } from "./components/authApi";
 // src/api.js
 // Temporary in-memory "backend" for MoodSpace
 
@@ -14,10 +15,14 @@ export async function createMood(moodEntry) {
 
   moods.push(newEntry);
 
-  // simulate small delay
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(newEntry), 300);
-  });
+  // // simulate small delay
+  // return new Promise((resolve) => {
+  //   setTimeout(() => resolve(newEntry), 300);
+  // });
+  // In real app, you'd do:
+  const res = await apiSend("/mood/add", "POST", newEntry);
+  console.log("Received from backend:", res);
+  return res;
 }
 
 // Get / GET all moods

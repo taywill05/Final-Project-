@@ -1,6 +1,7 @@
 import {useState } from 'react';
 import {createMood} from './api';
 import './MoodLog.css';
+import { apiSend } from './components/authApi';
 
 function MoodLog() {    
 
@@ -21,11 +22,17 @@ function MoodLog() {
             date: new Date().toISOString()
         };
 
-        try {
-            await createMood(moodEntry);
-            setStatus('Mood logged successfully!');
+        //try {
+            await axios.post('/mood/add', moodEntry).then(response => {
+                console.log('Mood logged:', response.data);
+            }).catch(error => {
+                console.error('Error logging mood:', error);
+            });
+            //await createMood(moodEntry);
+           // const data = await apiSend("/mood/add", "POST", moodEntry);
+            //setStatus(data.message || 'Mood response not received!');
             
-            setTimeout(() => { 
+           /* setTimeout(() => { 
             setMood('');
         setNotes('');
             }, 3000);
@@ -33,7 +40,7 @@ function MoodLog() {
         } catch (error) {
             console.error( error);
             setStatus('Error logging mood. Please try again.');
-        }
+        }*/
     };
 
     return (    

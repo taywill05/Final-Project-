@@ -32,7 +32,7 @@ public class MoodController {
         return "Entry added successfully!";
     }
     
-    @GetMapping("/history")
+    @GetMapping("/data-display")
     public List<CreateMood> getHistory() {
         return moodService.getAllEntries();
     }
