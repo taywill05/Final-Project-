@@ -14,44 +14,43 @@ const FormPage = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setStatus(null);
+  e.preventDefault();
+  setLoading(true);
+  setStatus(null);
 
-    try {
-      let response;
-
-      if (isLoginMode) {
-        // LOGIN
-        response = await apiLogin(username, password);
-        setStatus("Login successful!");
-      } else {
-        // SIGNUP
-        if (password !== confirmPassword) {
-          setStatus("Passwords do not match!");
-          setLoading(false);
-          return;
-        }
-        response = await apiRegister(username, password);
-        setStatus("Signup successful!");
-      }
-
-      // Save token
+  try {
+    if (isLoginMode) {
+      
+      const response = await apiLogin(username, password);
       localStorage.setItem("jwt_token", response.token);
 
-      // Redirect to home
+      setStatus("Login successful! Redirecting...");
       setTimeout(() => {
         navigate("/home");
       }, 1000);
-    } catch (error) {
-      setStatus(
-        "Error: " + (error?.response?.data?.error || "Something went wrong")
-      );
-      console.error(error);
-    } finally {
-      setLoading(false);
+    } else {
+     
+      if (password !== confirmPassword) {
+        setStatus("Passwords do not match!");
+        setLoading(false);
+        return;
+      }
+
+      await apiRegister(username, password);
+
+      setStatus("Signup successful! Please log in.");
+      setIsLoginMode(true);      
+      setPassword("");           
     }
-  };
+  } catch (error) {
+    setStatus(
+      "Error: " + (error?.response?.data?.error || "Something went wrong")
+    );
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="formpage-container">
