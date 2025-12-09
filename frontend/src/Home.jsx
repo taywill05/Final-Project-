@@ -16,12 +16,28 @@ Which fictional character matches your mood?`;
         apiKey: import.meta.env.VITE_GEMINI_API_KEY
     });
 
+    function extractTextFromGenAI(res) {
+    // Join all text parts in the first candidate
+    const text =
+        res?.candidates?.[0]?.content?.parts
+        ?.map(p => p?.text ?? '')
+        .join('\n')
+        .trim() ?? '';
+    return text;
+    }
+
     async function getQuestions() {
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-        const response = await model.generateContent(
-            `Generate 3-5 questions like: ${demoQuestions}`
-        );
+        const response = await genAI.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: `Generate 3-5 questions similar to: ${demoQuestions} and return the questions in json format.`
+        });
+        // const model = genAI.models.generateContent({ model: "gemini-2.5-flash" });
+        // const response = await model.generateContent(
+        //     `Generate 3-5 questions like: ${demoQuestions}`
+        // );
         console.log("Gemini response:", response);
+        const text = extractTextFromGenAI(response);
+        console.log("Extracted text:", text);
         return response.response.text();
     }
 
