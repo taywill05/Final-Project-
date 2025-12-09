@@ -65,7 +65,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     background: linear-gradient(90deg, #3550ff3a, #7A3FFF)
-    /*background-color: #374eaa5b;*/  
+      
 }
 .logMood-button:active, .logMood-button:hover {
     box-shadow: 0 0 20px #D96CE8;
@@ -102,4 +102,66 @@
 .stat-value {
     font-size: 16px;
     color: #ffffff;
+}
+
+.question-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.vibe-card {
+  margin: 2rem auto;
+  max-width: 600px;
+  padding: 1.5rem 2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+}
+
+.vibe-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.vibe-quote {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.question-text {
+  color: #ffffff;            
+  font-size: 1.3rem;         
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+
+.question-item {
+  margin-bottom: 1.8rem;
+  list-style: none;          
+}
+
+
+.question-answer {
+  width: 100%;
+  min-height: 60px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  resize: vertical;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  outline: none;
+  backdrop-filter: blur(5px);
+}
+
+
+.question-answer:focus {
+  border: 2px solid #a88cf9;
+  background: rgba(255, 255, 255, 0.25);
 }

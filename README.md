@@ -42,12 +42,14 @@ Caption generation / vibe-based music suggestions
 
 **### 🔗 API Endpoints**
 
-| **Method**    | **Route**        |   **Purpose**                 |
-|------------|-----------------------|--------------------------------|
-| **GET**    | `/moods`              | Go to Home Screen              |
-| **POST**   | `/moods`              | Create a new mood entry        |
-| **GET**    | `/moods/data-display` | Fetch all mood entries         |
-| **PUT**    | `/moods/{id}`         | Update a mood entry            |
+
+| **Endpoint** | **Method** | **Explanation** |
+|---|---:|---|
+| `/mood/` | `GET` | Public welcome/health endpoint that returns a short message; no authentication required. |
+| `/mood/add` | `POST` | Authenticated endpoint that accepts a `CreateMood` JSON payload and saves it for the current user (use `Principal` or `@AuthenticationPrincipal` to associate the entry). |
+| `/mood/data-display` | `GET` | Authenticated endpoint that returns mood history; for regular users return only their entries, for admins return all entries (authorize with roles and scope the response server-side). |
+| `/mood/vibe-check` | `POST` | Authenticated endpoint that accepts a `List<VibeCheckItem>` JSON payload, validates/sanitizes it, and persists the vibe-check associated with the authenticated user. |
+
 
 
 AI Usage Log Template
@@ -63,11 +65,17 @@ Breanna Taffe 			Shemaiah Lester
 - Date Submitted:11/18/2025
 
 
+
+
 ### 🤖 AI Tool Usage Log
 
-| **Date**  | **AI Tool** | **Prompt (Summary)**                                      | **Purpose**          | **Output Used (Y/N)** | **Human Revisions**                                                                 | **Ethical Reflection**                                                                 |
-|-----------|-------------|-----------------------------------------------------------|----------------------|------------------------|--------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
-| 11/12     | Copilot     | Describe some simple app ideas for an intermediate programmer? | Feature Discovery    | Y                      | Combined the generated vibe check idea with the mood journal feature to use emojis to log daily mood. | We used AI to help us identify some general app topics to build app features around. This AI provided us with a jumping-off point for an app idea that we could create several features around. |
+| **Date** | **AI Tool** | **Prompt (Summary)** | **Purpose** | **Output Used (Y/N)** | **Human Revisions** | **Ethical Reflection** |
+|---|---|---|---:|:---:|---|---|
+| 11/12 | Copilot | Describe some simple app ideas for an intermediate programmer | Feature Discovery | Y | Combined the generated vibe-check idea with the mood-journal feature to use emojis to log daily mood; refined wording and UX flow | Used AI to identify app topics as a jumping-off point for multiple features |
+| 11/12 | ChatGPT | Generate realistic test data for project databases | Test data generation | Y | Removed real-looking PII; replaced username/password with synthetic placeholders; hashed password-like strings; normalized and sanitized mood entries; archived original output in a secure, access-restricted location | Model produced sensitive-looking fields (username, password, first/last name, mood history); we redacted and replaced those fields with synthetic non-identifying values, hashed credentials, added a policy to never accept/store plaintext credentials from AI outputs, validated distributions and checked for bias, and documented provenance and retention policy |
+| 11/12 | Gemini API | Ask users random vibe questions and return a funny vibe + matching quote | User engagement / Vibe check | Y | Integrated prompts into app flow; tuned question order and response tone for clarity and safety | Considered consent and transparency; avoided manipulative phrasing and biased or harmful suggestions |
+
+
 
 
 Summary of AI Use

@@ -1,13 +1,12 @@
-import {useState } from 'react';
-import {createMood} from './api';
+import {useState } from "react";
 import './MoodLog.css';
 import { apiSend } from './components/authApi';
 
 function MoodLog() {    
 
-    const [mood, setMood] = useState('');
-    const [notes, setNotes] = useState('');
-    const [status, setStatus] = useState('');
+    const [mood, setMood] = useState("");
+    const [notes, setNotes] = useState("");
+    const [status, setStatus] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,12 +21,22 @@ function MoodLog() {
             date: new Date().toISOString()
         };
 
-        //try {
-            await axios.post('/mood/add', moodEntry).then(response => {
-                console.log('Mood logged:', response.data);
-            }).catch(error => {
-                console.error('Error logging mood:', error);
-            });
+        try {
+            setStatus("Saving");
+            await apiSend("/mood/add","post", moodEntry);
+
+            setStatus("Mood logged successfully!");
+
+
+            setMood("");
+            setNotes("");
+    
+        } catch (error){
+            console.error("Error logging mood:", error);
+            setStatus("Error logging mood. Please try again.")
+        }
+    
+    
             //await createMood(moodEntry);
            // const data = await apiSend("/mood/add", "POST", moodEntry);
             //setStatus(data.message || 'Mood response not received!');
@@ -41,14 +50,15 @@ function MoodLog() {
             console.error( error);
             setStatus('Error logging mood. Please try again.');
         }*/
+    
     };
-
     return (    
         
         <div className="moodlog-container">
         <h1>Log Your Mood</h1>
         
         <form onSubmit={handleSubmit} className="moodlog-form">
+
 
             <label>
                 Select Mood:
@@ -76,6 +86,7 @@ function MoodLog() {
                     <option value="joyful">😂 Joyful</option>
                     <option value="peaceful">☮️ Peaceful</option>
                     <option value="frustrated">😤 Frustrated</option>
+                    <option value="irritated">😒 Irritated</option>
 
                 </select>
             </label>
