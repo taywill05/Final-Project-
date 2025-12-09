@@ -1,4 +1,4 @@
-package edu.famu.contactlist.auth;
+package com.example.demo.auth;
 
 import java.util.Map;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.famu.contactlist.config.UserDetailsConfig;
-import edu.famu.contactlist.security.JwtService;
+import com.example.demo.config.UserDetailsConfig;
+import com.example.demo.security.JwtService;
 
 @RestController
 @RequestMapping("/auth")

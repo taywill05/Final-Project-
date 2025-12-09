@@ -1,4 +1,4 @@
-package edu.famu.contactlist.security;
+package com.example.demo.security;
 
 import java.security.Key;
 import java.util.Date;

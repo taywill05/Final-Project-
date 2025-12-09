@@ -1,4 +1,4 @@
-package edu.famu.contactlist.config;
+package com.example.demo.config;
 
 import java.util.Collections;
 import java.util.Map;
