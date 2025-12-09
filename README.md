@@ -42,12 +42,14 @@ Caption generation / vibe-based music suggestions
 
 **### 🔗 API Endpoints**
 
-| **Method**    | **Route**        |   **Purpose**                 |
-|------------|-----------------------|--------------------------------|
-| **GET**    | `/moods`              | Go to Home Screen              |
-| **POST**   | `/moods`              | Create a new mood entry        |
-| **GET**    | `/moods/data-display` | Fetch all mood entries         |
-| **PUT**    | `/moods/{id}`         | Update a mood entry            |
+
+| **Endpoint** | **Method** | **Explanation** |
+|---|---:|---|
+| `/mood/` | `GET` | Public welcome/health endpoint that returns a short message; no authentication required. |
+| `/mood/add` | `POST` | Authenticated endpoint that accepts a `CreateMood` JSON payload and saves it for the current user (use `Principal` or `@AuthenticationPrincipal` to associate the entry). |
+| `/mood/data-display` | `GET` | Authenticated endpoint that returns mood history; for regular users return only their entries, for admins return all entries (authorize with roles and scope the response server-side). |
+| `/mood/vibe-check` | `POST` | Authenticated endpoint that accepts a `List<VibeCheckItem>` JSON payload, validates/sanitizes it, and persists the vibe-check associated with the authenticated user. |
+
 
 
 AI Usage Log Template
