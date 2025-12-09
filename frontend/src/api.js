@@ -1,36 +1,18 @@
-import { apiSend } from "./components/authApi";
 // src/api.js
-// Temporary in-memory "backend" for MoodSpace
+import { apiSend, apiGet } from "./components/authApi";
 
-let moods = []; // this will live as long as the dev server is running
-
-// Create / POST a mood
+// Create / POST a mood (optional helper if you want to use it)
 export async function createMood(moodEntry) {
-  console.log("Pretending to send mood to backend:", moodEntry);
-
-  const newEntry = {
-    id: Date.now(),
-    ...moodEntry,
-  };
-
-  moods.push(newEntry);
-
-  // // simulate small delay
-  // return new Promise((resolve) => {
-  //   setTimeout(() => resolve(newEntry), 300);
-  // });
-  // In real app, you'd do:
-  const res = await apiSend("/mood/add", "POST", newEntry);
-  console.log("Received from backend:", res);
+  // This will call: POST http://localhost:8080/mood/add
+  const res = await apiSend("/mood/add", "post", moodEntry);
   return res;
 }
 
-// Get / GET all moods
+// Get / GET all moods for history
 export async function getMoods() {
-  // simulate small delay
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(moods), 300);
-  });
+  // This will call: GET http://localhost:8080/mood/data-display
+  const res = await apiGet("/mood/data-display");
+  return res;
 }
 
 // Fake LOGIN (if you're using it)

@@ -26,6 +26,7 @@ function moodToEmoji(mood) {
     joyful: "😂",
     peaceful: "☮️",
     frustrated: "😤",
+    irritated: "😒",
   };
 
   if (!mood) return "❓";
@@ -35,12 +36,11 @@ function moodToEmoji(mood) {
 
 function DataDisplay() {
   const [filter, setFilter] = useState("all");
-  const [entries, setEntries] = useState([]); // start empty
+  const [entries, setEntries] = useState([]); 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     handleRefresh();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleRefresh = async () => {
