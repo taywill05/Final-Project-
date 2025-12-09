@@ -63,14 +63,16 @@ Breanna Taffe 			Shemaiah Lester
 - Date Submitted:11/18/2025
 
 
-**Creating updated table**
 
-I’ll create the updated table with two new rows based on the user’s input. Since they didn’t specify dates, I’ll use 11/12 for both rows to keep it consistent. The first new row will be about using ChatGPT to generate test data for databases, and the second will be about integrating the Gemini API for user engagement. I’ll make sure each cell is concise and follows the formatting rules, including bold labels where it enhances readability. Let’s get this table ready!
+
+### 🤖 AI Tool Usage Log
+
 | **Date** | **AI Tool** | **Prompt (Summary)** | **Purpose** | **Output Used (Y/N)** | **Human Revisions** | **Ethical Reflection** |
 |---|---|---|---:|:---:|---|---|
 | 11/12 | Copilot | Describe some simple app ideas for an intermediate programmer | Feature Discovery | Y | Combined the generated vibe-check idea with the mood-journal feature to use emojis to log daily mood; refined wording and UX flow | Used AI to identify app topics as a jumping-off point for multiple features |
-| 12/3 | ChatGPT | Generate realistic test data for project databases | Test data generation | Y | Cleaned and normalized generated records; adjusted value distributions and removed unrealistic entries | Ensured no real PII was used; preferred synthetic data to protect privacy |
-| 12/8 | Gemini API | Ask users random vibe questions and return a funny vibe + matching quote | User engagement / Vibe check | Y | Integrated prompts into app flow; tuned question order and response tone for clarity and safety | Considered consent and transparency; avoided manipulative phrasing and biased or harmful suggestions |
+| 11/12 | ChatGPT | Generate realistic test data for project databases | Test data generation | Y | Removed real-looking PII; replaced username/password with synthetic placeholders; hashed password-like strings; normalized and sanitized mood entries; archived original output in a secure, access-restricted location | Model produced sensitive-looking fields (username, password, first/last name, mood history); we redacted and replaced those fields with synthetic non-identifying values, hashed credentials, added a policy to never accept/store plaintext credentials from AI outputs, validated distributions and checked for bias, and documented provenance and retention policy |
+| 11/12 | Gemini API | Ask users random vibe questions and return a funny vibe + matching quote | User engagement / Vibe check | Y | Integrated prompts into app flow; tuned question order and response tone for clarity and safety | Considered consent and transparency; avoided manipulative phrasing and biased or harmful suggestions |
+
 
 
 
