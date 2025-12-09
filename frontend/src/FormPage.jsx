@@ -1,78 +1,157 @@
-import {useState} from 'react';
-import { Link, useNavigate} from 'react-router-dom';
-import './FormPage.css';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./FormPage.css";
 import { FaLock, FaUser } from "react-icons/fa";
-import {login} from './api';
+import { apiLogin, apiRegister } from "./components/authApi";
 
+const FormPage = () => {
+  const [isLoginMode, setIsLoginMode] = useState(true);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [status, setStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-function FormPage() {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setStatus(null);
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [status, setStatus] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+    try {
+      let response;
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setStatus(null);
-
-        try {
-            await login(username, password);
-            setStatus('Login successful! Redirecting...');
-            setTimeout(() => {
-            navigate('/home');  
-            }, 2000);
+      if (isLoginMode) {
+        // LOGIN
+        response = await apiLogin(username, password);
+        setStatus("Login successful!");
+      } else {
+        // SIGNUP
+        if (password !== confirmPassword) {
+          setStatus("Passwords do not match!");
+          setLoading(false);
+          return;
         }
+        response = await apiRegister(username, password);
+        setStatus("Signup successful!");
+      }
 
-         catch (error) {
-            console.error(error);
-            setStatus('Login failed. Please check your credentials and try again.');
-        }
-        finally {
-            setLoading(false);
-        }
-    };
+      // Save token
+      localStorage.setItem("jwt_token", response.token);
 
-    return (
-   <div className="formpage-container">
-    <div className= "form-box login">
+      // Redirect to home
+      setTimeout(() => {
+        navigate("/home");
+      }, 1000);
+    } catch (error) {
+      setStatus(
+        "Error: " + (error?.response?.data?.error || "Something went wrong")
+      );
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="formpage-container">
+      <div className="form-box">
+        <h2>{isLoginMode ? "Login" : "Sign Up"}</h2>
+
+        <div className="mode-toggle">
+          <button
+            className={isLoginMode ? "active-tab" : ""}
+            onClick={() => setIsLoginMode(true)}
+          >
+            Login
+          </button>
+
+          <button
+            className={!isLoginMode ? "active-tab" : ""}
+            onClick={() => setIsLoginMode(false)}
+          >
+            SignUp
+          </button>
+        </div>
+
         <form onSubmit={handleSubmit}>
-        <h1>Login</h1>
-        
-            <div className="input-group">
-                <input type="text" id="username" name="username" 
-                placeholder="Username" required 
-                value={username} onChange={(e) => setUsername(e.target.value)} />
-                <FaUser  className ="icon"/>
-            </div>
+          <div className="input-group">
+            <input
+              type="text"
+              placeholder="Username"
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <FaUser className="icon" />
+          </div>
 
-            <div className="input-group">
-                <input type="password" id="password" name="password"
-                placeholder="Password" required 
-                value={password} onChange={(e) => setPassword(e.target.value)} />
-                <FaLock  className ="icon"/>
-            </div>
+          <div className="input-group">
+            <input
+              type="password"
+              placeholder="Password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <FaLock className="icon" />
+          </div>
 
+          {!isLoginMode && (
+            <div className="input-group">
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+          )}
+
+          {isLoginMode && (
             <div className="remember-forgot">
-                <label>
-                    <input type="checkbox" /> Remember me
-                </label>
-                <a href="#">Forgot Password?</a>
+              <label>
+                <input type="checkbox" /> Remember me
+              </label>
+              <a href="#">Forget Password</a>
             </div>
-            <button type="submit" className="submit-button" disabled={loading}>
-                {loading ? 'Logging in...' : 'Login'}
-            </button>
-            {status && <div className="status-message">{status}</div>}
-            <p className="signup-link">
-                Don't have an account? <a href="#">Sign Up</a>
-            </p>
-            
-        </form>     
+          )}
+
+          <button
+            type="submit"
+            className="submit-button"
+            disabled={loading}
+          >
+            {loading
+              ? isLoginMode
+                ? "Logging in..."
+                : "Signing up..."
+              : isLoginMode
+              ? "Login"
+              : "Sign up"}
+          </button>
+
+          {status && <div className="status-message">{status}</div>}
+
+          <p className="signup-link">
+            {isLoginMode
+              ? "Don't have an account"
+              : "Already have an account"}
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsLoginMode(!isLoginMode);
+              }}
+            >
+              {isLoginMode ? " Signup now" : " Login"}
+            </a>
+          </p>
+        </form>
+      </div>
     </div>
-   </div>
-    );
-}   
+  );
+};
 
 export default FormPage;

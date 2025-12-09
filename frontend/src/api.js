@@ -1,5 +1,7 @@
 // src/api.js
-import { apiSend, apiGet } from "./components/authApi";
+import { apiSend, apiGet,apiLogin, apiRegister } from "./components/authApi";
+
+const TOKEN_KEY = "moodSpace_token";
 
 // Create / POST a mood (optional helper if you want to use it)
 export async function createMood(moodEntry) {
@@ -15,20 +17,21 @@ export async function getMoods() {
   return res;
 }
 
-// Fake LOGIN (if you're using it)
 export async function login(username, password) {
-  console.log("Pretending to log in:", username);
+  const data = await apiLogin(username,password);
 
-  const validUsername = "mooduser";
-  const validPassword = "mood123";
+  if(data.token) {
+    localStorage.setItem(TOKEN_KEY, data.token)
+  }
+  return data; 
+}
 
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (username === validUsername && password === validPassword) {
-        resolve({ username });
-      } else {
-        reject(new Error("Invalid username or password"));
-      }
-    }, 600);
-  });
+export async function signup(username, password) {
+  const response = await apiRegister(username, password);
+
+  if(data.token){
+    localStorage.setItem(TOKEN_KEY, data.token);
+  }
+  return data;
+  
 }

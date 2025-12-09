@@ -1,5 +1,6 @@
 import axios from "axios";
 const API_URL =  "http://localhost:8080";
+const TOKEN_KEY = "jwt_token";
 
 const api = axios.create({
     baseURL: API_URL,
@@ -7,12 +8,15 @@ const api = axios.create({
     headers: {"Content-Type": "application/json"},
 });
 
-// Attach JWT from localStorage before each request
-/*api.interceptors.request.use(
+ //Attach JWT from localStorage before each request
+api.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem("contactlist_token");
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+        const token = localStorage.getItem(TOKEN_KEY);
+        if (!config.url?.startsWith("/auth")) {
+            const token = localStorage.getItem(TOKEN_KEY);
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
         }
         return config;
     },
@@ -29,7 +33,7 @@ api.interceptors.response.use(
         }
         return Promise.reject(error);
     }
-);*/
+);
 
 export async function apiGet(path) {
     const res = await api.get(path);
@@ -43,20 +47,27 @@ export async function apiSend(path, method, body) {
 
 // Auth endpoints
 export async function apiLogin(username, password) {
-    const res = await api.post("/api/auth/login", { username, password });
+    const res = await api.post("/auth/login", { username, password });
     return res.data; // { username, token }
 }
 
+
+export async function apiRegister(username, password) {
+    const res = await api.post("/auth/register" , {username, password});
+    return res.data
+}
+
+
 export async function apiLogout() {
     // For JWT, "logout" is client-side; we can still hit backend if you want logs
-    const res = await api.post("/api/auth/logout");
+    const res = await api.post("/auth/logout");
     return res.data;
 }
 
-export async function apiMe() {
-    const res = await api.get("/api/auth/me");
-    return res.data; // { username } or 401
-}
+
+
+
+
 
 export default api;
 
