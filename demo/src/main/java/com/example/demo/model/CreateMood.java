@@ -4,30 +4,40 @@ import java.time.LocalDate;
 
 
 public class CreateMood {
-    private LocalDate date;
-    private MoodEntry newMood;
+    private String mood;
+    private String note;
+    private String date;
 
     public CreateMood() {}
 
-    public CreateMood(LocalDate date, MoodEntry newMood) {
+    public CreateMood(String mood, String note, String date) {
+        this.mood = mood;
+        this.note = note;
         this.date = date;
-        this.newMood = newMood;
     }
 
-    //Getters
-    public LocalDate getDate() {
+    public String getMood(){
+        return mood;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public String getDate(){
         return date;
     }
 
-    public MoodEntry getNewMood() {
-        return newMood;
+    //Setters
+    public void setMood(String mood) {
+        this.mood = mood;
     }
 
-    //Setters
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setNote(String note) {
+        this.note = note;
     }
-    public void setNewMood(MoodEntry newMood) {
-        this.newMood = newMood;
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
