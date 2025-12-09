@@ -59,6 +59,6 @@ public class AuthController {
         } catch (AuthenticationException ex) {
             return ResponseEntity.status(401).body(Map.of("error", "invalid credentials"));
         }
+      
     }
-
 }
