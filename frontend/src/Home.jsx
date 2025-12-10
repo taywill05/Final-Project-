@@ -51,6 +51,15 @@ function Home() {
 
       setQuestions(questionList);
       setAnswers(new Array(questionList.length).fill(""));
+
+
+
+      localStorage.setItem("vibeQuestions", JSON.stringify(questionList));
+      localStorage.removeItem("vibeAnswers");
+      localStorage.removeItem("vibeResult");
+      setVibeResult(null);
+
+
     } catch (error) {
       console.error("Error generating questions:", error);
 
@@ -61,6 +70,12 @@ function Home() {
 
       setQuestions(fallback);
       setAnswers(new Array(fallback.length).fill(""));
+
+      localStorage.setItem("vibeQuestions", JSON.stringify(fallback));
+      localStorage.removeItem("vibeAnswers");
+      localStorage.removeItem("vibeResult");
+      setVibeResult(null);
+
     } finally {
       setLoading(false);
     }
@@ -71,6 +86,7 @@ function Home() {
     setAnswers((prev) => {
       const copy = [...prev];
       copy[index] = value;
+      localStorage.setItem("vibeAnswers", JSON.stringify(copy))
       return copy;
     });
   };
@@ -135,6 +151,15 @@ Return ONLY valid JSON in this exact format:
         emoji: parsed.emoji,
         quote: parsed.quote,
       });
+
+      localStorage.setItem(
+        "vibeResult" ,
+        JSON.stringify ({
+          vibeName: parsed.vibeName,
+          emoji: parsed.emoji,
+          quote: parsed.quote,
+        })        
+      );
     } catch (error) {
       console.error("Error generating vibe result:", error);
       alert("Could not generate your vibe result. Please try again.");
@@ -144,8 +169,21 @@ Return ONLY valid JSON in this exact format:
   };
 
   useEffect(() => {
+  const storedQuestions = JSON.parse(localStorage.getItem("vibeQuestions") || "null");
+  const storedAnswers = JSON.parse(localStorage.getItem("vibeAnswers") || "null");
+  const storedVibe = JSON.parse(localStorage.getItem("vibeResult") || "null");
+
+  if (storedQuestions && Array.isArray(storedQuestions)) {
+    setQuestions(storedQuestions);
+    setAnswers(storedAnswers ?? new Array(storedQuestions.length).fill(""));
+  } else {
     getQuestions();
-  }, []);
+  }
+
+  if (storedVibe) {
+    setVibeResult(storedVibe);
+  }
+}, []);;
 
   return (
     <div className="home-container">
@@ -185,11 +223,25 @@ Return ONLY valid JSON in this exact format:
           className="logMood-button"
           onClick={handleGenerateVibe}
           disabled={vibeLoading || loading}
-          style={{ marginLeft: "1rem" }}
         >
           {vibeLoading ? "Creating Your Vibe..." : "Generate My Vibe"}
         </button>
+        
+        <button className= "logMood-button"
+          onClick={() => {
+          localStorage.removeItem("vibeQuestions");
+          localStorage.removeItem("vibeAnswers");
+          localStorage.removeItem("vibeResult");
+          setVibeResult(null);
+          getQuestions();
+       }}>
+        New Vibe Check
+       </button>
       </div>
+
+
+       
+
 
   
       {vibeResult && (
@@ -200,6 +252,8 @@ Return ONLY valid JSON in this exact format:
           <p className="vibe-quote">“{vibeResult.quote}”</p>
         </div>
       )}
+
+        
 
       <div className="stats-row">
         <div className="stat-card">

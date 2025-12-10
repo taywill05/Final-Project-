@@ -108,6 +108,14 @@
   margin-top: 1.5rem;
   display: flex;
   justify-content: center;
+  gap: 1.5rem;
+  flex-direction: row;
+}
+
+.question-actions .logMood-button{
+  margin-top: 0;
+  min-width: 240px;
+  text-align: center;
 }
 
 .vibe-card {
