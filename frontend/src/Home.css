@@ -95,13 +95,14 @@
 .stat-title {
     font-size: 20px;
     font-weight: bold;
-    color: #000000;
+    color: #ffffff;
     margin-bottom: 12px;
 }
 
+
 .stat-value {
     font-size: 16px;
-    color: #000000;
+    color: #ffffff;
 }
 
 .question-actions {
@@ -132,11 +133,14 @@
 .vibe-title {
   font-size: 1.8rem;
   margin-bottom: 0.75rem;
+  color: white;
 }
 
 .vibe-quote {
   font-size: 1rem;
   opacity: 0.9;
+  color: #ffffff;
+
 }
 
 .question-text {
