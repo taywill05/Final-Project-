@@ -95,13 +95,13 @@
 .stat-title {
     font-size: 20px;
     font-weight: bold;
-    color: #ffffff;
+    color: #000000;
     margin-bottom: 12px;
 }
 
 .stat-value {
     font-size: 16px;
-    color: #ffffff;
+    color: #000000;
 }
 
 .question-actions {
