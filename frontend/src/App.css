@@ -14,7 +14,7 @@
   background-color: rgba(0, 0, 0, 0.192);
   border-radius: 2px;
   padding: 20px;
-   display: flex;
+  display: flex;
   justify-content: space-between;
   align-items: flex-end;
   gap: 20px;
