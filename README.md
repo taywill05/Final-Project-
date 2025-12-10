@@ -13,11 +13,8 @@ Based on answers, assign a vibe label (e.g., “Zen Wizard”, “Chaotic Good�
 2. Emoji Mood Journal
 Select up to 3 emojis to represent your mood (e.g., 😤😴🍕).
 Optional: Add a short note or caption.
-Auto-tag recurring emojis and show trends over time.
 3. Vibe History Timeline
 Scrollable calendar or timeline view of past vibes and emoji logs.
-Color-coded entries (e.g., warm tones for energetic days, cool tones for calm ones).
-Tap to expand and read past entries.
 
 ### 🛠️ Tech Stack
 Layer
