@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./MoodLog.css";
-import { createMood } from "./api"; // uses your /mood-posts backend
+import { createMood } from "./api"; 
 
 const moodEmojiMap = {
   happy: "😊",
@@ -117,5 +117,5 @@ function MoodLog() {
   );
 }
 
-// 🔥 THIS is the part the error is complaining about:
+
 export default MoodLog;

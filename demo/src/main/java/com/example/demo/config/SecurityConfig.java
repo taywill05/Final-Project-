@@ -38,10 +38,13 @@ public class SecurityConfig {
                 
                 .requestMatchers(
                     "/auth/**",
-                    "/api/users/**",
-                    "/api/mood-posts/**",
                     "/error"
                 ).permitAll()
+
+                .requestMatchers(
+                    "/api/mood-posts/**",
+                    "/api/users/**"
+                ).authenticated()
                 
                 .anyRequest().authenticated()
             )
