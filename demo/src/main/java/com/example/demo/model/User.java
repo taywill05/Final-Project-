@@ -6,60 +6,76 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "\"moodPosts\"")
-public class moodPosts {
-    
+@Table(name = "users")
+public class User {
+
     @Id
-    @Column(name= "\"username\"", nullable=false, unique=true)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(name= "data_created", nullable=false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name= "\"note\"", nullable=false)
+    @Column(name = "firstName", nullable = true)
     private String firstName;
-    
-    @Column(name= "\"lastName\"", nullable=false)
+
+    @Column(name = "lastName", nullable = true)
     private String lastName;
 
-    protected users() {}
+    protected User() {
+        
+    }
 
-    protected users(String password, String firstName, String lastName) {
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(String username, String password, String firstName, String lastName) {
+        this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    //Getters
+    // Getters
+
     public String getUsername() {
         return username;
-    }   
+    }
+
     public String getPassword() {
         return password;
-    }       
+    }
+
     public String getFirstName() {
         return firstName;
     }
+
     public String getLastName() {
         return lastName;
     }
-    //Setters
+
+    // Setters
+
     public void setUsername(String username) {
         this.username = username;
-    }           
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
     @Override
     public String toString() {
-        return "users [username=" + username + ", firstName=" + firstName + ", lastName="
-                + lastName + "]";
+        return "User[username=" + username + "]";
     }
 }

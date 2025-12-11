@@ -1,12 +1,7 @@
+import api from "./authApi";
 
-import { apiSend } from "./authApi"; 
-
-export async function saveVibeCheck(questions, answers) {
-  const payload = questions.map((q, idx) => ({
-    question: q,
-    answer: answers[idx] || "",
-  }));
-
- 
-  return apiSend("/mood/vibe-check", "post", payload);
+export async function saveVibeCheck(vibeItems) {
+  
+  const res = await api.post("/mood-posts/vibe-check", vibeItems);
+  return res.data; 
 }

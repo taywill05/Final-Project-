@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 public class VibeCheckItem {
+
     private String question;
     private String answer;
 
@@ -11,20 +12,9 @@ public class VibeCheckItem {
         this.answer = answer;
     }
 
-    public String getQuestion() {
-        return question;
-    }
+    public String getQuestion() { return question; }
+    public String getAnswer() { return answer; }
 
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-    
+    public void setQuestion(String question) { this.question = question; }
+    public void setAnswer(String answer) { this.answer = answer; }
 }

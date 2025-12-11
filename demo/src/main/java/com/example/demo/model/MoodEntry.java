@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 
 public class MoodEntry {
-    private String mood;     // Stores the date of the entry 
-    private String notes; // Stores a list of emojis associated with the entry
+    private String mood;      
+    private String notes; 
     private LocalDate date; 
 
     public MoodEntry() {}

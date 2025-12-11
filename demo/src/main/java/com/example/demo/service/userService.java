@@ -1,40 +1,35 @@
 package com.example.demo.service;
 
-import com.example.demo.model.users;
-import com.example.demo.repository.userRepository;
+import org.springframework.stereotype.Service;
+import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 
 import java.util.List;
-
 import java.util.Optional;
 
-public interface userService {
-    List<users> getAllUsers();
-    Optional<users> findById(String id);        // search by ID
-    users createUser(users usr);                 // create user
+@Service
+public class UserService {
+
+    private final UserRepository userRepository;
+
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public Optional<User> findById(String username) {
+        return userRepository.findById(username);
+    }
+
+    public User createUser(User user) {
+        return userRepository.save(user); // hash psw here
+    }
+
+
 }
 
-
-
-
-// public class userService {
-//     private final userRepository repo;
-
-//     public userService(userRepository repo) {
-//         this.repo = repo;
-//     }
-
-//     public List<users> getAllUsers(){
-//         return repo.getAllUsers()
-//                     .orElseThrow(() -> new RuntimeException("No users found: " ));
-//     }
-
-//     public users getByUsername(String username){
-//         return repo.findById(username)
-//                     .orElseThrow(() -> new RuntimeException("User not found: " + username));
-//     }
-
-//     public users createUser(users usr){
-//         return repo.save(usr);
-//     }
-// }
 

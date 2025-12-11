@@ -1,37 +1,43 @@
-// src/api.js
-import { apiSend, apiGet,apiLogin, apiRegister } from "./components/authApi";
+import { apiSend, apiGet } from "./components/authApi";
 
-const TOKEN_KEY = "moodSpace_token";
 
-// Create / POST a mood (optional helper if you want to use it)
+function getCurrentUsername() {
+  return localStorage.getItem("username");
+}
+
 export async function createMood(moodEntry) {
-  // This will call: POST http://localhost:8080/mood/add
-  const res = await apiSend("/mood/add", "post", moodEntry);
-  return res;
-}
-
-// Get / GET all moods for history
-export async function getMoods() {
-  // This will call: GET http://localhost:8080/mood/data-display
-  const res = await apiGet("/mood/data-display");
-  return res;
-}
-
-export async function login(username, password) {
-  const data = await apiLogin(username,password);
-
-  if(data.token) {
-    localStorage.setItem(TOKEN_KEY, data.token)
+  const username = getCurrentUsername();
+  if (!username) {
+    throw new Error("No username found in localStorage. Please log in first.");
   }
-  return data; 
-}
 
-export async function signup(username, password) {
-  const response = await apiRegister(username, password);
+  const body = {
+    username,
+    mood: moodEntry.mood,
+    note: moodEntry.note ?? moodEntry.notes ?? "",
+    emoji: moodEntry.emoji ?? "",
+  };
 
-  if(data.token){
-    localStorage.setItem(TOKEN_KEY, data.token);
-  }
-  return data;
   
+  const data = await apiSend("/api/mood-posts", "post", body);
+  return data;
+}
+
+
+export async function getMoods() {
+  const username = getCurrentUsername();
+  if (!username) {
+    return [];
+  }
+
+
+  const posts = await apiGet(`/api/mood-posts/user/${username}`);
+
+  return posts.map((p) => ({
+    id: p.id,
+    mood: p.mood,
+    note: p.note,
+    emoji: p.emoji,
+    date: p.dateCreated,
+  }));
 }

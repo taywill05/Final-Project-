@@ -1,18 +1,25 @@
-package com.example.demo.model;
+package com.example.demo.dto;
 
-public class CreateMood {
+public class MoodPostRequest {
+    private String username;
     private String mood;
     private String note;
     private String emoji;
 
-    public CreateMood() {}
+    public MoodPostRequest(){}
 
-    public CreateMood(String mood, String note, String emoji) {
+    public MoodPostRequest(String username, String mood, String note, String emoji) {
+        this.username = username;
         this.mood = mood;
         this.note = note;
         this.emoji = emoji;
     }
 
+    
+    public String getUsername() {
+        return username;
+    }
+    
     public String getMood() {
         return mood;
     }
@@ -25,6 +32,12 @@ public class CreateMood {
         return emoji;
     }
 
+
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    
     public void setMood(String mood) {
         this.mood = mood;
     }
@@ -36,4 +49,5 @@ public class CreateMood {
     public void setEmoji(String emoji) {
         this.emoji = emoji;
     }
+    
 }

@@ -1,11 +1,7 @@
 package com.example.demo.config;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,27 +11,47 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsConfig implements UserDetailsService {
 
-    private final Map<String, String> users = new ConcurrentHashMap<>();
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserDetailsConfig(PasswordEncoder passwordEncoder) {
+    public UserDetailsConfig(UserRepository userRepository,
+                             PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        // create a default user for testing
-        users.put("user", passwordEncoder.encode("password"));
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        String pw = users.get(username);
-        if (pw == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        return new User(username, pw, Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
-    }
-
+    
     public boolean register(String username, String rawPassword) {
-        if (users.containsKey(username)) return false;
-        users.put(username, passwordEncoder.encode(rawPassword));
+      
+        if (userRepository.existsById(username)) {
+            return false;  
+        }
+
+        String encodedPassword = passwordEncoder.encode(rawPassword);
+
+       
+        User user = new User(username, encodedPassword);
+
+        userRepository.save(user);  
         return true;
+    }
+
+   
+    @Override
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
+
+       
+        User user = userRepository.findById(username)
+            .orElseThrow(() ->
+                new UsernameNotFoundException("User not found: " + username)
+            );
+
+        
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getUsername())
+                .password(user.getPassword())  
+                .authorities("ROLE_USER")       
+                .build();
     }
 }

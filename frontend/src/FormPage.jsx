@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./FormPage.css";
 import { FaLock, FaUser } from "react-icons/fa";
-import { apiLogin, apiRegister } from "./components/authApi";
+import { TOKEN_KEY, apiLogin, apiRegister } from "./components/authApi";
 
 const FormPage = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -14,43 +14,47 @@ const FormPage = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setStatus(null);
+    e.preventDefault();
+    setLoading(true);
+    setStatus(null);
 
-  try {
-    if (isLoginMode) {
-      
-      const response = await apiLogin(username, password);
-      localStorage.setItem("jwt_token", response.token);
+    try {
+      if (isLoginMode) {
+        // LOGIN
+        const response = await apiLogin(username, password);
 
-      setStatus("Login successful! Redirecting...");
-      setTimeout(() => {
-        navigate("/home");
-      }, 1000);
-    } else {
-     
-      if (password !== confirmPassword) {
-        setStatus("Passwords do not match!");
-        setLoading(false);
-        return;
+        // Save token + username
+        localStorage.setItem(TOKEN_KEY, response.token);
+        localStorage.setItem("username", username);
+
+        setStatus("Login successful! Redirecting...");
+        setTimeout(() => {
+          navigate("/home");
+        }, 1000);
+      } else {
+        // SIGNUP
+        if (password !== confirmPassword) {
+          setStatus("Passwords do not match!");
+          setLoading(false);
+          return;
+        }
+
+        await apiRegister(username, password);
+
+        setStatus("Signup successful! Please log in.");
+        setIsLoginMode(true);
+        setPassword("");
+        setConfirmPassword("");
       }
-
-      await apiRegister(username, password);
-
-      setStatus("Signup successful! Please log in.");
-      setIsLoginMode(true);      
-      setPassword("");           
+    } catch (error) {
+      setStatus(
+        "Error: " + (error?.response?.data?.error || "Something went wrong")
+      );
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    setStatus(
-      "Error: " + (error?.response?.data?.error || "Something went wrong")
-    );
-    console.error(error);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <div className="formpage-container">

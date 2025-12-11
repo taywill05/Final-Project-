@@ -93,18 +93,25 @@ function Home() {
 
   
   const handleSubmitVibe = async () => {
-    try {
-      setSaving(true);
-      await saveVibeCheck(questions, answers);
-      alert("Your vibe check was saved!"); 
+  try {
+    setSaving(true);
 
-    } catch (error) {
-      console.error("Error saving vibe check:", error);
-      alert("Could not save your vibe check. Please try again.");
-    } finally {
-      setSaving(false);
-    }
-  };
+    // Combine questions + answers into [{ question, answer }, ...]
+    const vibeItems = questions.map((q, index) => ({
+      question: q,
+      answer: answers[index] || "",
+    }));
+
+    await saveVibeCheck(vibeItems);
+    alert("Your vibe check was saved!");
+  } catch (error) {
+    console.error("Error saving vibe check:", error);
+    alert("Could not save your vibe check. Please try again.");
+  } finally {
+    setSaving(false);
+  }
+};
+
 
   
   const handleGenerateVibe = async () => {
