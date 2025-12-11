@@ -3,7 +3,10 @@ package com.example.demo.service;
 import com.example.demo.dto.MoodPostRequest;
 import com.example.demo.dto.MoodPostResponse;
 import com.example.demo.model.MoodPost;
+import com.example.demo.model.User;
 import com.example.demo.repository.MoodPostRepository;
+import com.example.demo.repository.UserRepository;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -16,35 +19,40 @@ import java.util.stream.Collectors;
 public class MoodPostServiceImpl implements MoodPostService {
 
     private final MoodPostRepository moodPostRepository;
+    private final UserRepository userRepository;
 
-    public MoodPostServiceImpl(MoodPostRepository moodPostRepository) {
+    public MoodPostServiceImpl(MoodPostRepository moodPostRepository, UserRepository userRepository) {
         this.moodPostRepository = moodPostRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public MoodPostResponse createMoodPost(MoodPostRequest request) {
 
+        User user = userRepository.findById(request.getUsername())
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
         OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
 
-        MoodPost entity = new MoodPost();
-        entity.setUsername(request.getUsername());
-        entity.setMood(request.getMood());
-        entity.setNote(request.getNote());
-        entity.setEmoji(request.getEmoji());
-        entity.setDateCreated(now);
+        MoodPost post = new MoodPost();
+        post.setUser(user);
+        post.setMood(request.getMood());
+        post.setNote(request.getNote());
+        post.setEmoji(request.getEmoji());
+        post.setDateCreated(now);
         
 
-        MoodPost saved = moodPostRepository.save(entity);
+        MoodPost saved = moodPostRepository.save(post);
         return toResponse(saved);
     }
 
     @Override
     public List<MoodPostResponse> getMoodPostsForUser(String username) {
         return moodPostRepository
-                .findByUsernameOrderByDateCreatedDesc(username)
+                .findByUserUsernameOrderByDateCreatedDesc(username)
                 .stream()
                 .map(this::toResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -53,13 +61,13 @@ public class MoodPostServiceImpl implements MoodPostService {
                 .findAll(Sort.by(Sort.Direction.DESC, "dateCreated"))
                 .stream()
                 .map(this::toResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private MoodPostResponse toResponse(MoodPost post) {
         return new MoodPostResponse(
                 post.getId(),
-                post.getUsername(),
+                post.getUser().getUsername(),
                 post.getMood(),
                 post.getNote(),
                 post.getEmoji(),

@@ -1,9 +1,15 @@
 package com.example.demo.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.List;
+import com.example.demo.model.MoodPost;
 
 @Entity
 @Table(name = "users")
@@ -16,11 +22,14 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "firstName", nullable = true)
+    @Column(name = "firstname", nullable = true)
     private String firstName;
 
-    @Column(name = "lastName", nullable = true)
+    @Column(name = "lastname", nullable = true)
     private String lastName;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MoodPost> moodPosts = new ArrayList<>();
 
     protected User() {
         

@@ -13,9 +13,9 @@ public class MoodPost {
     private Long id;
 
 
-
-    @Column(nullable = false)
-    private String username;
+    @ManyToOne
+    @JoinColumn(name = "username", referencedColumnName = "username", nullable = false)
+    private User user;
 
     @Column(nullable = false)
     private String mood;
@@ -31,26 +31,26 @@ public class MoodPost {
     public MoodPost() {
     }
 
-    // used when creating a new mood from the service
-    public MoodPost(String username, String mood, String note, String emoji, OffsetDateTime dateCreated) {
-        this.username = username;
+    
+    public MoodPost(User user, String mood, String note, String emoji, OffsetDateTime dateCreated) {
+        this.user = user;
         this.mood = mood;
         this.note = note;
         this.emoji = emoji;
         this.dateCreated = dateCreated;
     }
 
-    // getters
+    
     public Long getId() { return id;}
-    public String getUsername(){return username;}
+    public User getUser(){return user;}
     public String getMood() { return mood; }
     public String getNote() { return note; }
     public String getEmoji() { return emoji; }
     public OffsetDateTime getDateCreated() { return dateCreated; }
 
-    // setters (id is useful if you later add a DB)
+    
     public void setId(Long id) { this.id = id; }
-    public void setUsername(String username) {this.username = username;}
+    public void setUser(User user) {this.user = user;}
     public void setMood(String mood) { this.mood = mood; }
     public void setNote(String note) { this.note = note; }
     public void setEmoji(String emoji) { this.emoji = emoji; }
