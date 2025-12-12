@@ -1,4 +1,5 @@
 import { apiSend, apiGet } from "./components/authApi";
+import { moodToEmoji } from "./moodMap";
 
 
 function getCurrentUsername() {
@@ -15,7 +16,7 @@ export async function createMood(moodEntry) {
     username,
     mood: moodEntry.mood,
     note: moodEntry.note ?? moodEntry.notes ?? "",
-    emoji: moodEntry.emoji ?? "",
+    emoji: moodEntry.emoji ?? moodToEmoji(moodEntry.mood),
   };
 
   
@@ -23,12 +24,29 @@ export async function createMood(moodEntry) {
   return data;
 }
 
+export async function updateMood(id, updatedFields) {
+  const body = {
+    mood: updatedFields.mood,
+    note: updatedFields.note,
+    emoji: updatedFields.emoji ??
+      (updatedFields.mood ? moodToEmoji(updatedFields.mood) : undefined),
+  };
 
+  const data = await apiSend(`/api/mood-posts/${id}`, "put", body);
+  return data;
+}
+
+export async function deleteMood(id) {
+  await apiSend(`/api/mood-posts/${id}` , "delete");
+
+}
 export async function getMoods() {
   const username = getCurrentUsername();
   if (!username) {
     return [];
   }
+
+  
 
 
   const posts = await apiGet(`/api/mood-posts/user/${username}`);

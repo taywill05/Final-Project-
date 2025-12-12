@@ -12,4 +12,7 @@ public interface MoodPostService {
     List<MoodPostResponse> getMoodPostsForUser(String username);
 
     List<MoodPostResponse> getAllMoodPosts();
+
+    MoodPostResponse updateMoodPost(Long id, MoodPostRequest request);
+    void deleteMoodPost(Long id);
 }

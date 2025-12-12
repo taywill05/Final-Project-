@@ -17,6 +17,11 @@ function Home() {
     "Pick your energy: 🐢 🐇 🚀 🧘\n" +
     "Which fictional character matches your mood?\n";
 
+  const username = localStorage.getItem("username") || "guest";
+  const QUESTIONS_KEY = `vibeQuestions_${username}`;
+  const ANSWERS_KEY = `vibeAnswers_${username}`;
+  const RESULT_KEY = `vibeResult_${username}`;  
+
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -54,9 +59,9 @@ function Home() {
 
 
 
-      localStorage.setItem("vibeQuestions", JSON.stringify(questionList));
-      localStorage.removeItem("vibeAnswers");
-      localStorage.removeItem("vibeResult");
+      localStorage.setItem(QUESTIONS_KEY, JSON.stringify(questionList));
+      localStorage.removeItem(ANSWERS_KEY);
+      localStorage.removeItem(RESULT_KEY);
       setVibeResult(null);
 
 
@@ -71,9 +76,9 @@ function Home() {
       setQuestions(fallback);
       setAnswers(new Array(fallback.length).fill(""));
 
-      localStorage.setItem("vibeQuestions", JSON.stringify(fallback));
-      localStorage.removeItem("vibeAnswers");
-      localStorage.removeItem("vibeResult");
+      localStorage.setItem(QUESTIONS_KEY, JSON.stringify(fallback));
+      localStorage.removeItem(ANSWERS_KEY);
+      localStorage.removeItem(RESULT_KEY);
       setVibeResult(null);
 
     } finally {
@@ -86,32 +91,35 @@ function Home() {
     setAnswers((prev) => {
       const copy = [...prev];
       copy[index] = value;
-      localStorage.setItem("vibeAnswers", JSON.stringify(copy))
+      localStorage.setItem(ANSWERS_KEY, JSON.stringify(copy))
       return copy;
     });
   };
 
   
   const handleSubmitVibe = async () => {
-  try {
-    setSaving(true);
+    if (!vibeResult) {
+      alert("Please generate your vibe first, then save it");
+      return;
+    }
 
-    // Combine questions + answers into [{ question, answer }, ...]
-    const vibeItems = questions.map((q, index) => ({
-      question: q,
-      answer: answers[index] || "",
-    }));
+    try {
+      setSaving(true);
 
-    await saveVibeCheck(vibeItems);
-    alert("Your vibe check was saved!");
-  } catch (error) {
-    console.error("Error saving vibe check:", error);
-    alert("Could not save your vibe check. Please try again.");
-  } finally {
-    setSaving(false);
-  }
+      await saveVibeCheck({
+        questions,
+        answers,
+        vibeResult,
+      });
+
+      alert("YOur vibe check was saved!");
+    } catch(error) {
+      console.error("Error saving vibe check:", error);
+      alert("Could not save your vibe check. Please try again.");
+    } finally {
+      setSaving(false);
+    }
 };
-
 
   
   const handleGenerateVibe = async () => {
@@ -147,26 +155,21 @@ Return ONLY valid JSON in this exact format:
       });
 
       let text = response.text || "";
-
-      
       text = text.trim().replace(/```json/gi, "").replace(/```/g, "");
+
 
       const parsed = JSON.parse(text);
 
-      setVibeResult({
+
+      const result = {
         vibeName: parsed.vibeName,
         emoji: parsed.emoji,
         quote: parsed.quote,
-      });
+      };
 
-      localStorage.setItem(
-        "vibeResult" ,
-        JSON.stringify ({
-          vibeName: parsed.vibeName,
-          emoji: parsed.emoji,
-          quote: parsed.quote,
-        })        
-      );
+      setVibeResult(result);
+
+      localStorage.setItem(RESULT_KEY, JSON.stringify(result) );
     } catch (error) {
       console.error("Error generating vibe result:", error);
       alert("Could not generate your vibe result. Please try again.");
@@ -176,9 +179,9 @@ Return ONLY valid JSON in this exact format:
   };
 
   useEffect(() => {
-  const storedQuestions = JSON.parse(localStorage.getItem("vibeQuestions") || "null");
-  const storedAnswers = JSON.parse(localStorage.getItem("vibeAnswers") || "null");
-  const storedVibe = JSON.parse(localStorage.getItem("vibeResult") || "null");
+  const storedQuestions = JSON.parse(localStorage.getItem(QUESTIONS_KEY) || "null");
+  const storedAnswers = JSON.parse(localStorage.getItem(ANSWERS_KEY) || "null");
+  const storedVibe = JSON.parse(localStorage.getItem(RESULT_KEY) || "null");
 
   if (storedQuestions && Array.isArray(storedQuestions)) {
     setQuestions(storedQuestions);
@@ -236,19 +239,15 @@ Return ONLY valid JSON in this exact format:
         
         <button className= "logMood-button"
           onClick={() => {
-          localStorage.removeItem("vibeQuestions");
-          localStorage.removeItem("vibeAnswers");
-          localStorage.removeItem("vibeResult");
+          localStorage.removeItem(QUESTIONS_KEY);
+          localStorage.removeItem(ANSWERS_KEY);
+          localStorage.removeItem(RESULT_KEY);
           setVibeResult(null);
           getQuestions();
        }}>
         New Vibe Check
        </button>
       </div>
-
-
-       
-
 
   
       {vibeResult && (

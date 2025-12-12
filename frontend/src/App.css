@@ -22,6 +22,24 @@
   z-index: 1000;
   }
 
+  .logout-button {
+  margin-left: 1rem;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 2px solid #ff5bd4;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s ease;
+}
+
+.logout-button:hover {
+  background: #ff5bd4;
+  color: black;
+}
+
+
   .brand {
 
     font-size: 20px;

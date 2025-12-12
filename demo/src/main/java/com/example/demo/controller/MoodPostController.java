@@ -25,6 +25,19 @@ public class MoodPostController {
         return moodPostService.createMoodPost(request);
     }
 
+    @PutMapping("/{id}")
+    public MoodPostResponse updateMoodPost(
+        @PathVariable Long id,
+        @RequestBody MoodPostRequest request
+    ){
+        return moodPostService.updateMoodPost(id,request);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteMoodPost(@PathVariable Long id){
+        moodPostService.deleteMoodPost(id);
+    }
     @GetMapping
     public List<MoodPostResponse> getAllMoodPosts() {
         return moodPostService.getAllMoodPosts();

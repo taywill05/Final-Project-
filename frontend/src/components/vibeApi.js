@@ -1,7 +1,25 @@
-import api from "./authApi";
+import { createMood } from "../api";
 
-export async function saveVibeCheck(vibeItems) {
-  
-  const res = await api.post("/mood-posts/vibe-check", vibeItems);
-  return res.data; 
+export async function saveVibeCheck(data) {
+  const {questions, answers, vibeResult} = data;
+  const {vibeName, emoji, quote} = vibeResult;
+
+  const noteLines = questions.map((q, i) => {
+    const ans = answers[i] || "";
+    return `Q: ${q}\nA: ${ans}`;
+  });
+
+  const noteText = [
+    "Vibe Chech Q&A:",
+    ...noteLines,
+  ].join("\n");
+
+  const moodEntry = {
+    mood: vibeName,
+    emoji: emoji,
+    note: noteText,
+  };
+  return createMood(moodEntry);
 }
+
+  

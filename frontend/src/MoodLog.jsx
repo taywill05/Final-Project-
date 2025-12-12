@@ -2,31 +2,6 @@ import { useState } from "react";
 import "./MoodLog.css";
 import { createMood } from "./api"; 
 
-const moodEmojiMap = {
-  happy: "😊",
-    sad: "😔",
-    angry: "😡",
-    surprised: "😲",
-    neutral: "😐",
-    excited: "🤩",
-    anxious: "😰",
-    grateful: "🙏",
-    tired: "😴",
-    stressed: "😣",
-    confused: "😕",
-    bored: "😐",
-    lonely: "😞",
-    hopeful: "🌈",
-    relaxed: "😌",
-    proud: "😎",
-    curious: "🤔",
-    motivated: "💪",
-    overwhelmed: "😵",
-    joyful: "😂",
-    peaceful: "☮️",
-    frustrated: "😤",
-    irritated: "😒",
-};
 
 function MoodLog() {
   const [mood, setMood] = useState("");
@@ -45,7 +20,7 @@ function MoodLog() {
     const moodEntry = {
       mood,
       note: notes,
-      emoji
+      //emoji
     };
 
     try {

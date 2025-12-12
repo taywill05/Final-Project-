@@ -64,6 +64,30 @@ public class MoodPostServiceImpl implements MoodPostService {
                 .toList();
     }
 
+    @Override
+    public MoodPostResponse updateMoodPost(Long id, MoodPostRequest request) {
+        MoodPost post = moodPostRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Mood post not found"));
+
+        if(request.getMood() != null && !request.getMood().isBlank()) {
+            post.setMood(request.getMood());
+        }
+
+        post.setNote(request.getNote());
+        post.setEmoji(request.getEmoji());
+
+
+        MoodPost saved = moodPostRepository.save(post);
+        return toResponse(saved);
+
+
+    }
+
+    @Override 
+    public void deleteMoodPost(Long id) {
+        moodPostRepository.deleteById(id);
+    }
+
     private MoodPostResponse toResponse(MoodPost post) {
         return new MoodPostResponse(
                 post.getId(),
@@ -74,4 +98,5 @@ public class MoodPostServiceImpl implements MoodPostService {
                 post.getDateCreated()
         );
     }
+
 }

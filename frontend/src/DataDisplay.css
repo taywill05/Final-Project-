@@ -21,6 +21,8 @@
   font-size: 14px;
 }
 
+
+
 .history-filter {
   padding: 6px 10px;
   border-radius: 8px;
@@ -43,13 +45,14 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
 }
 
+
 .history-row {
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1.8fr;
+  grid-template-columns: 1.2fr 1fr 1.8fr 1fr;
   padding: 12px 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 16px;
-  column-gap: 140px;
+  column-gap: 40px;
   align-items: center;
 }
 
@@ -58,9 +61,11 @@
 }
 
 .history-row-header {
+  grid-template-columns: 1.2fr 1fr 1.8fr 1fr;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 16px;
   opacity: 0.85;
+  
 }
 
 .history-date {
@@ -83,6 +88,22 @@
     word-break: break-word;
     max-width: 100%;
     overflow-wrap: break-word;
+}
+
+.history-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.history-actions button {
+  background: linear-gradient(90deg, #ff7ad9, #b45cff);
+  font-size: 14px;
+  color: white;
+  display: inline-flex;
+  padding: 4px 8px;
+  border-radius: 10px;
 }
 
 .history-empty {

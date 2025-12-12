@@ -20,19 +20,23 @@ const FormPage = () => {
 
     try {
       if (isLoginMode) {
-        // LOGIN
         const response = await apiLogin(username, password);
-
-        // Save token + username
         localStorage.setItem(TOKEN_KEY, response.token);
         localStorage.setItem("username", username);
+
+        const QUESTIONS_KEY = `vibeQuestions_${username}`;
+        const ANSWERS_KEY = `vibeAnswers_${username}`;
+        const RESULT_KEY = `vibeResult_${username}`;
+
+        localStorage.removeItem(QUESTIONS_KEY);
+        localStorage.removeItem(ANSWERS_KEY);
+        localStorage.removeItem(RESULT_KEY);
 
         setStatus("Login successful! Redirecting...");
         setTimeout(() => {
           navigate("/home");
         }, 1000);
       } else {
-        // SIGNUP
         if (password !== confirmPassword) {
           setStatus("Passwords do not match!");
           setLoading(false);
