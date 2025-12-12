@@ -112,7 +112,7 @@ function Home() {
         vibeResult,
       });
 
-      alert("YOur vibe check was saved!");
+      alert("Your vibe check was saved!");
     } catch(error) {
       console.error("Error saving vibe check:", error);
       alert("Could not save your vibe check. Please try again.");

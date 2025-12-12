@@ -1,25 +1,19 @@
-import { createMood } from "../api";
+import { apiSend } from "./authApi";
 
-export async function saveVibeCheck(data) {
-  const {questions, answers, vibeResult} = data;
-  const {vibeName, emoji, quote} = vibeResult;
-
-  const noteLines = questions.map((q, i) => {
-    const ans = answers[i] || "";
-    return `Q: ${q}\nA: ${ans}`;
-  });
-
-  const noteText = [
-    "Vibe Chech Q&A:",
-    ...noteLines,
-  ].join("\n");
-
-  const moodEntry = {
-    mood: vibeName,
-    emoji: emoji,
-    note: noteText,
-  };
-  return createMood(moodEntry);
+function getCurrentUsername() {
+  return localStorage.getItem("username");
 }
 
-  
+export async function saveVibeCheck({ questions, answers, vibeResult }) {
+  const username = getCurrentUsername();
+  if (!username) throw new Error("No username found. Please log in.");
+
+  return apiSend("/api/vibe-checks", "post", {
+    username,
+    questions,
+    answers,
+    vibeName: vibeResult.vibeName,
+    emoji: vibeResult.emoji,
+    quote: vibeResult.quote,
+  });
+}

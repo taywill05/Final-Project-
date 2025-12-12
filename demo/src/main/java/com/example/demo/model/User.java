@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.demo.model.MoodPost;
+import com.example.demo.model.VibeCheck;
 
 @Entity
 @Table(name = "users")
@@ -30,6 +31,10 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MoodPost> moodPosts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VibeCheck> vibeChecks = new ArrayList<>();
+
 
     protected User() {
         
